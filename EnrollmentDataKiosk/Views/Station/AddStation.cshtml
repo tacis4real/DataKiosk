@@ -1,0 +1,221 @@
+﻿@model DataKioskStacks.DataContract.ClientStation
+
+@{
+    ViewBag.Title = "AddStation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var singleError = ViewBag.Error as string;
+    var errors = ViewBag.Errors as List<string>;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="header-icon">
+        <i class="pe-7s-note2"></i>
+    </div>
+    <div class="header-title">
+        <form action="#" method="get" class="sidebar-form search-box pull-right hidden-md hidden-lg hidden-sm">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <h1>Station</h1>
+        <small>Station list</small>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="@Url.Action("Index", "Home")"><i class="pe-7s-home"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </div>
+</section>
+
+<section class="content">
+    <div class="row">
+        <!-- Form controls -->
+        <div class="col-sm-12">
+            <div class="panel panel-bd">
+                <div class="panel-heading">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="table.html"> <i class="fa fa-list"></i>  Station List </a>
+                    </div>
+                </div>
+                
+
+                <div class="panel-body">
+                    
+                    <form action="@Url.Action("AddStation", "Station")" method="POST" class="col-sm-12">
+                        
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+
+                        @if (errors != null && errors.Any())
+                        {
+                            <div class="row">
+                            
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%">
+                                
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    @{
+                                        foreach (var error in errors)
+                                        {
+                                            <p>@Html.Raw(error)</p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (!string.IsNullOrEmpty(singleError) && singleError.Length > 0)
+                        {
+                            <div class="row">
+                                
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    <p>@Html.Raw(singleError)</p>
+                                </div>
+                            </div>
+                        }
+
+                        @Html.HiddenFor(m => m.APIAccessKey)
+                        @Html.HiddenFor(m => m.Status)
+                        @*@Html.HiddenFor(m => m.OrganizationId)*@
+
+                        <div class="col-sm-6 form-group">
+                            
+                            <label>Station Name</label>
+                            <input type="text" name="StationName" id="StationName" class="form-control" placeholder="Enter Station Name" required>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            
+                            <label>Station ID</label>
+                            <input type="text" name="StationId" id="StationId" class="form-control" placeholder="Enter Station ID" required>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            
+                            <label>Organization</label>
+                            <select class="form-control" id="OrganizationId" name="OrganizationId" size="1">
+                                @*<option selected class="test">Select an Organization</option>*@
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            
+                            <label>State of Location</label>
+                            <select class="form-control" id="StateId" name="StateId" size="1">
+                                @*<option selected class="test">Select State</option>
+                                <option>Kano</option>
+                                <option>Kaduna</option>
+                                <option>Gombe</option>
+                                <option>Sokoto</option>*@
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            
+                            <label>Local Government Area</label>
+                            <select class="form-control" id="LocalAreaId" name="LocalAreaId" size="1">
+                                <option selected class="test">Select Local Government Area</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-12 reset-button">
+                            <button type="submit" name="add-station" id="add-station" class="btn btn-success btn-block">Add Station</button>
+                            @*<input type="submit" value="Add Station" class="btn btn-success btn-block" />*@
+                        </div>
+
+
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section> <!-- /.content -->
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    
+    <script type="text/javascript">
+
+        var selectedStateId = 0;
+
+        $(document).ready(function () {
+
+            LoadState();
+            LoadOrganization();
+        });
+        
+        function LoadOrganization() {
+            $.getJSON("@Url.Action("GetOrganizations", "Data")", function(data) {
+                var items = "";
+                $.each(data, function(i, item) {
+                    if ('@Model.OrganizationId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#OrganizationId").html(items);
+            });
+        }
+
+        function LoadState() {
+            $.getJSON("@Url.Action("GetStates", "Data")", function(data) {
+                var items = "";
+                $.each(data, function(i, item) {
+                    if ('@Model.StateId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#StateId").html(items);
+            });
+        }
+        
+
+        $("#StateId").change(function () {
+            var stateId = $(this).val();
+            selectedStateId = stateId;
+
+            // Calling to Load
+            LoadLocalAreaByStateId(selectedStateId);
+        });
+
+
+
+        function LoadLocalAreaByStateId(stateId) {
+
+            $.getJSON('@Url.Action("GetLocalAreaByStateId", "Data")/', { stateId: stateId }, function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    if ('@Model.LocalAreaId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#LocalAreaId").html(items);
+            });
+        }
+        
+    </script>
+
+}

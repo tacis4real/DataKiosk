@@ -1,0 +1,173 @@
+﻿@model DataKioskStacks.APIServer.APIObjs.OrganizationRegObj
+
+@{
+    ViewBag.Title = "AddOrganization";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var singleError = ViewBag.Error as string;
+    var errors = ViewBag.Errors as List<string>;
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="header-icon">
+        <i class="pe-7s-note2"></i>
+    </div>
+    <div class="header-title">
+        <form action="#" method="get" class="sidebar-form search-box pull-right hidden-md hidden-lg hidden-sm">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <h1>Organization</h1>
+        <small>Organization list</small>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="@Url.Action("Index", "Home")"><i class="pe-7s-home"></i> Home</a></li>
+            <li><a href="@Url.Action("Index", "Organization")"><i class="pe-7s-home"></i> Organization</a></li>
+            <li class="active">Add Organization</li>
+        </ol>
+    </div>
+</section>
+
+
+<section class="content">
+    
+    <div class="row">
+        <!-- Form controls -->
+        <div class="col-sm-12">
+            <div class="panel panel-bd">
+                <div class="panel-heading">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="@Url.Action("Index", "Organization")"> <i class="fa fa-list"></i>  Organization List </a>
+                    </div>
+                </div>
+
+
+                <div class="panel-body">
+                    
+                    @*action="@Url.Action(@Model.Action, "ClientChurch")"*@
+
+                    @using (Html.BeginForm(@Model.Action, "Organization",
+                        new { ReturnUrl = ViewBag.ReturnUrl },
+                        FormMethod.Post, new { @class = "col-sm-12" }))
+                    {
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+
+                        if (errors != null && errors.Any())
+                        {
+                            <div class="row">
+
+                                <div class="alert alert-danger alert-dismissible show" role="alert" style="width: 100%">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    @{
+                                        foreach (var error in errors)
+                                        {
+                                            <p>@Html.Raw(error)</p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+
+
+                        if (!string.IsNullOrEmpty(singleError) && singleError.Length > 0)
+                        {
+                            <div class="row">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    <p>@Html.Raw(singleError)</p>
+                                </div>
+                            </div>
+                        }
+                        
+                        <div class="col-sm-6 form-group">
+                            <label>Name</label>
+                            <input type="text" name="Name" id="Name" value="@Model.Name" class="form-control" placeholder="Enter Organization Name" required>
+                            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "" })
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            <label>Phone Number</label>
+                            <input type="text" name="PhoneNumber" id="PhoneNumber" value="@Model.PhoneNumber" class="form-control" placeholder="Enter Phone Number" required>
+                            @Html.ValidationMessageFor(model => model.PhoneNumber)
+                        </div>
+
+                        <div class="col-sm-3 form-group">
+                            <label>Email Address</label>
+                            <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" placeholder="Enter Email Address" required>
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        
+                        <div class="col-sm-6 form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="4" name="Address" id="Address" placeholder="Enter Address ..." required>@Model.Address</textarea>
+                            @Html.ValidationMessageFor(model => model.Address)
+                            
+                        </div>
+                        
+                        <div class="col-sm-6 form-group">
+                            <label>Status</label>
+                            <select class="form-control" id="OrganizationStatusId" name="Status" size="1"></select>
+                        </div>
+                        
+
+                        <div class="col-sm-12 reset-button">
+                            <input type="submit" value="Submit" class="btn btn-success btn-block" />
+                        </div>
+
+
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section> <!-- /.content -->
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    
+    <script type="text/javascript">
+        
+
+        $(document).ready(function () {
+            LoadStatus();
+        });
+
+        
+        function LoadStatus() {
+            $.getJSON("@Url.Action("GetStatus", "Data")", function(data) {
+                var items = "";
+                $.each(data, function(i, item) {
+                    if ('@Model.Status' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#OrganizationStatusId").html(items);
+            });
+        }
+
+    </script>
+
+    
+
+}

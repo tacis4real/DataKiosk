@@ -1,0 +1,306 @@
+﻿@model EnrollmentDataKiosk.Models.PortalModel.AuthPortalUser
+
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var singleError = ViewBag.Error as string;
+    var errors = ViewBag.Errors as List<string>;
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="header-icon">
+        <i class="pe-7s-note2"></i>
+    </div>
+    <div class="header-title">
+        <form action="#" method="get" class="sidebar-form search-box pull-right hidden-md hidden-lg hidden-sm">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <h1>User</h1>
+        <small>User list</small>
+        <ol class="breadcrumb hidden-xs">
+            <li><a href="@Url.Action("Index", "Home")"><i class="pe-7s-home"></i> Home</a></li>
+            <li class="active">Add User</li>
+        </ol>
+    </div>
+</section>
+
+
+<section class="content">
+    <div class="row">
+        <!-- Form controls -->
+        <div class="col-sm-12">
+            <div class="panel panel-bd">
+                <div class="panel-heading">
+                    <div class="btn-group">
+                        <a class="btn btn-primary" href="@Url.Action("Index", "PortalUser")"> <i class="fa fa-list"></i>  User List </a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                    @using (Html.BeginForm(@Model.Action, "PortalUser",
+                        new { ReturnUrl = ViewBag.ReturnUrl },
+                        FormMethod.Post, new { @class = "col-sm-12" }))
+                    {
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        if (errors != null && errors.Any())
+                        {
+                            <div class="row">
+                                <div class="alert alert-danger alert-dismissible show" role="alert" style="width: 100%">
+                                    
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+
+                                    @{
+                                        foreach (var error in errors)
+                                        {
+                                            <p>@Html.Raw(error)</p>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                        if (!string.IsNullOrEmpty(singleError) && singleError.Length > 0)
+                        {
+                            <div class="row">
+
+                                <div class="alert alert-danger alert-dismissible show" role="alert" style="width: 100%">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    <p>@Html.Raw(singleError)</p>
+                                </div>
+                            </div>
+                        }
+
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Organizations</label>
+                                <select class="form-control" id="UserOrganizationId" name="OrganizationId" size="1" required=""></select>
+                                @Html.ValidationMessageFor(model => model.OrganizationId)
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>Surname</label>
+                                <input type="text" name="LastName" id="LastName" value="@Model.LastName" class="form-control" placeholder="Enter Surname" required>
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </div>
+
+                            @*<div class="col-sm-6 form-group">
+                                    <label>Stations</label>
+                                    <select class="form-control" id="EnrollerClientStationId" name="ClientStationId" size="1">
+                                        <option selected class="test">Select a Station</option>
+                                    </select>
+                                </div>*@
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-6 form-group">
+                                <label>First Name</label>
+                                <input type="text" name="FirstName" id="FirstName" value="@Model.FirstName" class="form-control" placeholder="Enter First Name" required>
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>Email</label>
+                                <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" placeholder="Enter Email" required>
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-6 form-group">
+                                <label>Mobile Number</label>
+                                <input type="text" name="MobileNo" id="MobileNo" value="@Model.MobileNo" class="form-control" placeholder="Enter Mobile Number" required="">
+                                @Html.ValidationMessageFor(model => model.MobileNo)
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>Gender</label>
+                                <select class="form-control" id="UserGenderId" name="SexId" size="1" required=""></select>
+                                @Html.ValidationMessageFor(model => model.SexId)
+                            </div>
+                        </div>
+                        
+                        if (@Model.Action == "AddUser")
+                        {
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="Password" id="Password" class="form-control" placeholder="Enter Password" required="">
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+
+                                <div class="col-sm-6 form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="ConfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Re-type Password" required="">
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                                </div>
+                            </div>
+                        }
+                        
+                        
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Roles</label>
+                                <select class="form-control" id="UserRoleId" name="RoleId" size="1" required=""></select>
+                                @Html.ValidationMessageFor(model => model.RoleId)
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>User Types</label>
+                                <select class="form-control" id="UserTypeId" name="UserTypeId" size="1" required=""></select>
+                                @Html.ValidationMessageFor(model => model.UserTypeId)
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 reset-button">
+                            <button type="submit" name="add-user" id="add-user" class="btn btn-success btn-block">Add User</button>
+                            @*<input type="submit" value="Add Station" class="btn btn-success btn-block" />*@
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- /.content -->
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript">
+
+        var selectedOrgId = 0;
+        var selectedStationId = 0;
+
+        $(document).ready(function () {
+
+            //$('#createEnrollerForm').parsley().on('field:validated', function () {
+            //    var ok = $('.parsley-error').length === 0;
+            //    $('.bs-callout-danger').toggleClass('hidden', ok);
+            //});
+
+            @*selectedOrgId = '@Html.Raw(Json.Encode(Model.OrganizationId))';
+            selectedStationId = '@Html.Raw(Json.Encode(Model.ClientStationId))';*@
+
+            //if (selectedOrgId > 0) {
+            //    LoadStationByOrgId(selectedOrgId);
+            //}
+
+            //if (selectedOrgId > 0 && selectedStationId > 0) {
+            //    GetOperatorRegId(selectedOrgId, selectedStationId, 1);
+            //}
+
+            LoadSex();
+            LoadOrganization();
+            LoadRole();
+            LoadUserType();
+        });
+
+
+        function LoadSex() {
+            $.getJSON("@Url.Action("GetSex", "Data")", function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    if ('@Model.SexId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#UserGenderId").html(items);
+            });
+        }
+
+
+        function LoadOrganization() {
+            $.getJSON("@Url.Action("GetOrganizations", "Data")", function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    if ('@Model.OrganizationId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#UserOrganizationId").html(items);
+            });
+        }
+
+        function LoadRole() {
+            $.getJSON("@Url.Action("GetRoles", "Data")", function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    if ('@Model.RoleId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#UserRoleId").html(items);
+            });
+        }
+
+
+        function LoadUserType() {
+            $.getJSON("@Url.Action("GetUserTypes", "Data")", function (data) {
+                var items = "";
+                $.each(data, function (i, item) {
+                    if ('@Model.UserTypeId' == item.K) {
+                        items += "<option value='" + item.K + "' selected='selected'>" + item.C + "</option>";
+                    } else {
+                        items += "<option value='" + item.K + "'>" + item.C + "</option>";
+                    }
+                });
+                $("#UserTypeId").html(items);
+            });
+        }
+
+
+        @*$("#EnrollerClientStationId").change(function () {
+            var stationId = $(this).val();
+            selectedStationId = stationId;
+
+            // Calling to Load
+            GetOperatorRegId(selectedOrgId, selectedStationId);
+        });
+
+
+        function GetOperatorRegId(orgId, stationId) {
+
+            $.getJSON('@Url.Action("GetOperatorId", "Data")/', { orgId: orgId, clientStationId: stationId }, function (data) {
+                $('#EnrollerRegId').val(data.operatorid);
+            });
+        }*@
+
+    </script>
+
+}
+
+
+
+
+

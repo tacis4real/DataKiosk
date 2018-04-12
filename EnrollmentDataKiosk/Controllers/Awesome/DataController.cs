@@ -1,0 +1,282 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using AwesomeMvc;
+using DataKioskStacks.APIServer.APIObjs;
+using EnrollmentDataKiosk.Manager;
+using WebCribs.TechCracker.WebCribs.TechCracker;
+
+namespace EnrollmentDataKiosk.Controllers.Awesome
+{
+    public class DataController : Controller
+    {
+
+        public JsonResult GetSex()
+        {
+            try
+            {
+                var add = new KeyContent("", "Select Gender");
+                var items = CustomManager.SexManager.GetList();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.Id, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public JsonResult GetStatus()
+        {
+            try
+            {
+                var add = new KeyContent("", "Select Status");
+                var items = CustomManager.StatusManager.GetList();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.Id, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public ActionResult GetRoles()
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a Role");
+                var items = CustomManager.GetRoles();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.RoleId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult GetUserTypes()
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a User Type");
+                var items = CustomManager.GetUserTypes();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.UserTypeId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        public ActionResult GetStates()
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a State");
+                var items = CustomManager.GetStates();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.StateId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult GetOrganizations()
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select an Organization");
+                var items = CustomManager.GetOrganizations();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.OrganizationId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult GetLocalAreas()
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a Local Government Area");
+                var items = CustomManager.GetLocalAreas();
+                if (items == null || !items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.LocalAreaId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult GetLocalAreaByStateId(int stateId)
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a Local Government");
+                var items = CustomManager.GetLocalAreaByStateId(stateId);
+
+                //var items = new List<LocalArea>
+                //{
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 1,
+                //        Name = "Ogba/Egbema/Ndoni"
+                //    },
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 2,
+                //        Name = "Omumma"
+                //    },
+                //};
+
+                if (!items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.LocalAreaId, o.Name)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public ActionResult GetStationByOrganizationId(int orgId)
+        {
+            try
+            {
+                var add = new KeyContent(0, "Select a Station");
+                var items = CustomManager.GetStationByOrganizationId(orgId);
+
+                if (!items.Any())
+                {
+                    return Json(new List<KeyContent> { add }, JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = items.Select(o => new KeyContent(o.ClientStationId, o.StationName)).ToList();
+                jsonitem.Insert(0, add);
+                return Json(jsonitem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new List<KeyContent>(), JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        //public JsonResult GetOperatorId(OperatorIdGenerationObj genObj)
+        //{
+        //    try
+        //    {
+        //        //var add = new KeyContent(0, "Select a Station");
+        //        string msg;
+        //        var item = CustomManager.GetOperatorId(genObj.OrganizationId, genObj.ClientStationId, out msg);
+
+        //        if (string.IsNullOrEmpty(item))
+        //        {
+        //            return Json("", JsonRequestBehavior.AllowGet);
+        //        }
+        //        var jsonitem = item;
+        //        return Json(new { operatorid = jsonitem }, JsonRequestBehavior.AllowGet);
+        //        //Json(new { success = true, message = processed.Status.Message.FriendlyMessage, regmember = processed.FullName }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+        //        return Json("", JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
+        public ActionResult GetOperatorId(int orgId, long clientStationId)
+        {
+            try
+            {
+                //var add = new KeyContent(0, "Select a Station");
+                string msg;
+                var item = CustomManager.GetOperatorId(orgId, clientStationId, out msg);
+
+                if (string.IsNullOrEmpty(item))
+                {
+                    return Json(new { operatorid = "" }, JsonRequestBehavior.AllowGet);
+                    //return Json(new { operatorid = string.IsNullOrEmpty(msg) ? "Unable to generte Operator Station Number" : msg }, JsonRequestBehavior.AllowGet);
+                    //return Json((string.IsNullOrEmpty(msg) ? "Unable to generte Operator Station Number" : msg), JsonRequestBehavior.AllowGet);
+                }
+                var jsonitem = item;
+                return Json(new { operatorid = jsonitem }, JsonRequestBehavior.AllowGet);
+                //Json(new { success = true, message = processed.Status.Message.FriendlyMessage, regmember = processed.FullName }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return Json(new { operatorid = "Unable to generte Operator Station Number" }, JsonRequestBehavior.AllowGet);
+
+                //return Json("", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+	}
+}

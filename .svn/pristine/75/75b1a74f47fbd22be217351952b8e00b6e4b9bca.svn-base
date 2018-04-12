@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E695C53-5404-4743-B2AE-9E81BDFE723D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataKioskStacks</RootNamespace>
+    <AssemblyName>DataKioskStacks</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WebCribs.TechCracker">
+      <HintPath>..\DLL\WebCribs.TechCracker.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIServer\APIObjs\RegObjs.cs" />
+    <Compile Include="APIServer\APIObjs\RemoteAPIObjs.cs" />
+    <Compile Include="APIServer\APIObjs\RespObjs.cs" />
+    <Compile Include="DataContract\Admin\DeviceAccessAuthorization.cs" />
+    <Compile Include="DataContract\Admin\Organization.cs" />
+    <Compile Include="DataContract\Admin\Role.cs" />
+    <Compile Include="DataContract\Admin\RoleNameValue.cs" />
+    <Compile Include="DataContract\Admin\User.cs" />
+    <Compile Include="DataContract\Admin\UserDevice.cs" />
+    <Compile Include="DataContract\Admin\UserLoginActivity.cs" />
+    <Compile Include="DataContract\Admin\UserRole.cs" />
+    <Compile Include="DataContract\Admin\UserType.cs" />
+    <Compile Include="DataContract\Beneficiary.cs" />
+    <Compile Include="DataContract\ClientHostSetting.cs" />
+    <Compile Include="DataContract\ContractHelpers\EnumDef.cs" />
+    <Compile Include="DataContract\ContractHelpers\ReportDisplayHelpers.cs" />
+    <Compile Include="DataContract\ContractHelpers\ValidationAttribute.cs" />
+    <Compile Include="DataContract\Enroller.cs" />
+    <Compile Include="DataContract\LocalArea.cs" />
+    <Compile Include="DataContract\Occupation.cs" />
+    <Compile Include="DataContract\SerialNumberKeeper.cs" />
+    <Compile Include="DataContract\State.cs" />
+    <Compile Include="DataManager\DataKioskModel.cs" />
+    <Compile Include="DataManager\MigConfig.cs" />
+    <Compile Include="DataManager\ModelAssistance.cs" />
+    <Compile Include="Infrastructure\Contract\IDataKioskContext.cs" />
+    <Compile Include="Infrastructure\Contract\IDataKioskRepository.cs" />
+    <Compile Include="Infrastructure\Contract\IDataKioskUoWork.cs" />
+    <Compile Include="Infrastructure\DataKioskContext.cs" />
+    <Compile Include="Infrastructure\DataKioskRepository.cs" />
+    <Compile Include="Infrastructure\DataKioskUoWork.cs" />
+    <Compile Include="Migrations\201804072122348_migrationX1.cs" />
+    <Compile Include="Migrations\201804072122348_migrationX1.Designer.cs">
+      <DependentUpon>201804072122348_migrationX1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BeneficiaryRepository.cs" />
+    <Compile Include="Repository\ClientStationRepository.cs" />
+    <Compile Include="Repository\EnrollerRepository.cs" />
+    <Compile Include="Repository\Helpers\EncryptionHelper.cs" />
+    <Compile Include="Repository\Helpers\EnrollHelper.cs" />
+    <Compile Include="Repository\Helpers\EntityValidatorHelper.cs" />
+    <Compile Include="Repository\Helpers\IPHelper.cs" />
+    <Compile Include="Repository\OrganizationRepository.cs" />
+    <Compile Include="Repository\SerialGeneratorRepository.cs" />
+    <Compile Include="Service\BeneficiaryService.cs" />
+    <Compile Include="Service\ClientStationService.cs" />
+    <Compile Include="Service\Contract\IServiceProvider.cs" />
+    <Compile Include="Service\Contract\ServiceProvider.cs" />
+    <Compile Include="Service\Contract\StandardServiceProvider.cs" />
+    <Compile Include="Service\EnrollerService.cs" />
+    <Compile Include="Service\OrganizationService.cs" />
+    <Compile Include="ValResource\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlFiles\lga_lookups.sql" />
+    <Content Include="SqlFiles\lga_lookups1.sql" />
+    <Content Include="SqlFiles\lga_lookups2.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804072122348_migrationX1.resx">
+      <DependentUpon>201804072122348_migrationX1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ValResource\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

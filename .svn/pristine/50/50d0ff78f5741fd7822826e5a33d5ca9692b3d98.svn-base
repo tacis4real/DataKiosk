@@ -1,0 +1,105 @@
+﻿@model EnrollmentDataKiosk.Models.PortalModel.UserLoginContract
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>DataKiosk Login</title>
+
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="~/Content/img/ico/favicon.png" type="image/x-icon">
+
+
+    <!-- Bootstrap -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap rtl -->
+    <!--<link href="assets/bootstrap-rtl/bootstrap-rtl.min.css" rel="stylesheet" type="text/css"/>-->
+    <!-- Pe-icon-7-stroke -->
+    <link href="~/Content/pe-icon-7-stroke.css" rel="stylesheet" type="text/css" />
+    <!-- style css -->
+    <link href="~/Content/stylehealth.min.css" rel="stylesheet" type="text/css" />
+    <!-- Theme style rtl -->
+    <!--<link href="assets/dist/css/stylehealth-rtl.css" rel="stylesheet" type="text/css"/>-->
+</head>
+<body>
+    <!-- Content Wrapper -->
+    <div class="login-wrapper">
+        <div class="container-center">
+            <div class="panel panel-bd">
+                <div class="panel-heading">
+                    <div class="view-header">
+                        <div class="header-icon">
+                            <i class="pe-7s-unlock"></i>
+                        </div>
+                        <div class="header-title">
+                            <h3>Login</h3>
+                            <small><strong>Please enter your credentials to login.</strong></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    
+                    @using (Html.BeginForm())
+                    {
+
+                        var errorMessage = ViewBag.UserProfileError as string;
+
+                        if (!string.IsNullOrEmpty(errorMessage) && errorMessage.Length > 1)
+                        {
+                            <div class="row">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5>Error!</h5>
+                                    <p>@Html.Raw(errorMessage)</p>
+                                </div>
+                            </div>
+                        }
+                    
+
+                        @Html.AntiForgeryToken()
+                        
+                        
+                        <div class="form-group">
+                            <label class="control-label" for="UserName">Username</label>
+                            <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="UserName" id="UserName" class="form-control">
+                            <span style="color:Red; text-align:left;"> @Html.ValidationMessageFor(model => model.UserName)</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="Password">Password</label>
+                            <input type="password" title="Please enter your password" placeholder="******" required="" value="" name="Password" id="Password" class="form-control">
+                            @*<span class="help-block small">Your strong password</span>*@
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn btn-success btn-block" />
+                            @*<button class="btn btn-lg">Login</button>*@
+                        </div>
+                        
+                        @*<div class="form-group text-center row m-t-10">
+                            <span style="color:Red; text-align:left;">@Html.ValidationSummary(true)</span>
+                            <div class="col-12">
+                                <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
+                            </div>
+                        </div>*@
+
+                    }
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- jQuery -->
+    <script src="~/Scripts/plugins/jQuery/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <!-- bootstrap js -->
+    <script src="~/Scripts/plugins/js/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

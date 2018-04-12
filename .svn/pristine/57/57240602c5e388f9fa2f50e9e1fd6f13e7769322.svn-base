@@ -1,0 +1,434 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Web;
+using DataKioskStacks.DataContract;
+using DataKioskStacks.DataContract.Admin;
+using DataKioskStacks.DataContract.ContractHelpers;
+using DataKioskStacks.Service.Contract;
+using WebCribs.TechCracker.WebCribs.TechCracker;
+using WebCribs.TechCracker.WebCribs.TechCracker.EnumInfo;
+
+namespace EnrollmentDataKiosk.Manager
+{
+    public class CustomManager
+    {
+
+        public class SexManager
+        {
+            public static List<NameAndValueObject> GetList()
+            {
+                return EnumHelper.GetEnumList(typeof(Sex));
+            }
+        }
+
+
+        public class StatusManager
+        {
+            public static List<NameAndValueObject> GetList()
+            {
+                return EnumHelper.GetEnumList(typeof(Status));
+            }
+        }
+
+        public static List<Organization> GetOrganizations()
+        {
+            try
+            {
+                //var items = new List<Organization>
+                //{
+                //    new Organization
+                //    {
+                //        OrganizationId = 1,
+                //        Name = "UBA"
+                //    },
+                //};
+                //return items;
+
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<Organization>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+
+                    sqlBuilder.AppendFormat("SELECT * FROM \"EnrollKiosk\".\"Organization\" ");
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<Organization>();
+                    while (dr.Read())
+                    {
+                        var item = new Organization();
+                        {
+                            item.OrganizationId = dr.GetInt64(dr.GetOrdinal("OrganizationId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<Organization>();
+            }
+
+        }
+
+        public static List<State> GetStates()
+        {
+            try
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<State>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+
+                    sqlBuilder.AppendFormat("SELECT * FROM \"EnrollKiosk\".\"State\" ");
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<State>();
+                    while (dr.Read())
+                    {
+                        var item = new State();
+                        {
+                            item.StateId = dr.GetInt32(dr.GetOrdinal("StateId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<State>();
+            }
+
+        }
+
+        public static List<Role> GetRoles()
+        {
+            try
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<Role>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+
+                    sqlBuilder.AppendFormat("SELECT * FROM \"EnrollKiosk\".\"Role\" ");
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<Role>();
+                    while (dr.Read())
+                    {
+                        var item = new Role();
+                        {
+                            item.RoleId = dr.GetInt32(dr.GetOrdinal("RoleId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<Role>();
+            }
+
+        }
+
+
+        public static List<UserType> GetUserTypes()
+        {
+            try
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<UserType>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+
+                    sqlBuilder.AppendFormat("SELECT * FROM \"EnrollKiosk\".\"UserType\" ");
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<UserType>();
+                    while (dr.Read())
+                    {
+                        var item = new UserType();
+                        {
+                            item.UserTypeId = dr.GetInt32(dr.GetOrdinal("UserTypeId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<UserType>();
+            }
+
+        }
+
+
+        public static List<LocalArea> GetLocalAreas()
+        {
+            try
+            {
+                //var items = new List<LocalArea>
+                //{
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 1,
+                //        StateId = 32,
+                //        Name = "Ogba/Egbema/Ndoni"
+                //    },
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 2,
+                //        StateId = 32,
+                //        Name = "Omumma"
+                //    },
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 2,
+                //        StateId = 24,
+                //        Name = "Mushin"
+                //    },
+                //    new LocalArea
+                //    {
+                //        LocalAreaId = 2,
+                //        StateId = 24,
+                //        Name = "Lagos-Island"
+                //    }
+
+                //};
+                //return items;
+
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<LocalArea>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+
+                    sqlBuilder.AppendFormat("SELECT * FROM \"EnrollKiosk\".\"LocalArea\" ");
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<LocalArea>();
+                    while (dr.Read())
+                    {
+                        var item = new LocalArea();
+                        {
+                            item.LocalAreaId = dr.GetInt32(dr.GetOrdinal("LocalAreaId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<LocalArea>();
+            }
+
+        }
+
+        public static List<LocalArea> GetLocalAreaByStateId(int stateId)
+        {
+            try
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<LocalArea>();
+                }
+
+                //var localAreas = GetLocalAreas();
+                //if (!localAreas.Any())
+                //{
+                //    return new List<LocalArea>();
+                //}
+
+                //var items = localAreas.FindAll(x => x.StateId == stateId);
+                //if (!items.Any())
+                //{
+                //    return new List<LocalArea>();
+                //}
+
+                //return items;
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+                    sqlBuilder.AppendFormat("SELECT * " +
+                                            " FROM \"EnrollKiosk\".\"LocalArea\" " +
+                                            " WHERE \"StateId\" = {0}", stateId);
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<LocalArea>();
+                    while (dr.Read())
+                    {
+                        var item = new LocalArea();
+                        {
+                            item.LocalAreaId = dr.GetInt64(dr.GetOrdinal("LocalAreaId"));
+                            item.Name = dr.GetString(dr.GetOrdinal("Name"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<LocalArea>();
+            }
+        }
+
+        public static List<ClientStation> GetStationByOrganizationId(int orgId)
+        {
+            try
+            {
+                var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                if (string.IsNullOrEmpty(connection))
+                {
+                    return new List<ClientStation>();
+                }
+
+                using (var sqlConnection = new SqlConnection(connection))
+                {
+                    sqlConnection.Open();
+                    var sqlBuilder = new StringBuilder();
+                    sqlBuilder.AppendFormat("SELECT * " +
+                                            " FROM \"EnrollKiosk\".\"ClientStation\" " +
+                                            " WHERE \"OrganizationId\" = {0}", orgId);
+                    string sql = sqlBuilder.ToString();
+                    var command = new SqlCommand(sql, sqlConnection);
+                    var dr = command.ExecuteReader();
+                    var items = new List<ClientStation>();
+                    while (dr.Read())
+                    {
+                        var item = new ClientStation();
+                        {
+                            item.ClientStationId = dr.GetInt64(dr.GetOrdinal("ClientStationId"));
+                            item.StationName = dr.GetString(dr.GetOrdinal("StationName"));
+                        };
+                        items.Add(item);
+                    }
+                    sqlConnection.Close();
+                    return items;
+                }
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                return new List<ClientStation>();
+            }
+        }
+
+        public static string GetOperatorId(long orgId, long clientStationId, out string msg)
+        {
+            try
+            {
+
+                //string msg;
+                var operatorId = ServiceProvider.Instance()
+                    .GetClientStationServices()
+                    .GenerateOperatorId(orgId, clientStationId, out msg);
+                if (string.IsNullOrEmpty(operatorId))
+                {
+                    return "";
+                }
+
+                msg = "";
+                return operatorId;
+                //var connection = ConfigurationManager.ConnectionStrings["DataKioskEntities"].ConnectionString;
+                //if (string.IsNullOrEmpty(connection))
+                //{
+                //    return new List<ClientStation>();
+                //}
+
+                //using (var sqlConnection = new SqlConnection(connection))
+                //{
+                //    sqlConnection.Open();
+                //    var sqlBuilder = new StringBuilder();
+                //    sqlBuilder.AppendFormat("SELECT * " +
+                //                            " FROM \"EnrollKiosk\".\"ClientStation\" " +
+                //                            " WHERE \"OrganizationId\" = {0}", orgId);
+                //    string sql = sqlBuilder.ToString();
+                //    var command = new SqlCommand(sql, sqlConnection);
+                //    var dr = command.ExecuteReader();
+                //    var items = new List<ClientStation>();
+                //    while (dr.Read())
+                //    {
+                //        var item = new ClientStation();
+                //        {
+                //            item.ClientStationId = dr.GetInt64(dr.GetOrdinal("ClientStationId"));
+                //            item.StationName = dr.GetString(dr.GetOrdinal("StationName"));
+                //        };
+                //        items.Add(item);
+                //    }
+                //    sqlConnection.Close();
+                //    return items;
+                //}
+            }
+            catch (Exception ex)
+            {
+                BugManager.LogApplicationBug(ex.StackTrace, ex.Source, ex.Message);
+                msg = "Unable to generate Operator Id";
+                return "";
+            }
+        }
+
+    }
+}
