@@ -114,26 +114,26 @@ namespace EnrollmentDataKiosk.Filters
             filterContext.Controller.ViewBag.IsSuccessful = false;
             if (!filterContext.Controller.ViewData.ModelState.IsValid)
             {
-                filterContext.Controller.ViewData.ModelState.AddModelError("", "Invalid update information");
+                filterContext.Controller.ViewData.ModelState.AddModelError("", @"Invalid update information");
                 return;
             }
 
             var modelList = filterContext.ActionParameters.Where(ap => ap.Key == "model").ToList();
             if (modelList.IsNullOrEmpty())
             {
-                filterContext.Controller.ViewData.ModelState.AddModelError("", "Invalid update information");
+                filterContext.Controller.ViewData.ModelState.AddModelError("", @"Invalid update information");
                 return;
             }
             if (!modelList.Any() || modelList.Count != 1)
             {
-                filterContext.Controller.ViewData.ModelState.AddModelError("", "Invalid update information");
+                filterContext.Controller.ViewData.ModelState.AddModelError("", @"Invalid update information");
                 return;
             }
 
             var model = modelList[0].Value as ChangePasswordContract;
             if (model == null)
             {
-                filterContext.Controller.ViewData.ModelState.AddModelError("", "Invalid update information");
+                filterContext.Controller.ViewData.ModelState.AddModelError("", @"Invalid update information");
                 return;
             }
             if (
@@ -143,8 +143,8 @@ namespace EnrollmentDataKiosk.Filters
                 model.ConfirmPassword = "";
                 model.NewPassword = "";
                 model.OldPassword = "";
-                filterContext.Controller.ViewData.ModelState.AddModelError("", "Old Password and New Password" +
-                                                                               " must be different");
+                filterContext.Controller.ViewData.ModelState.AddModelError("", @"Old Password and New Password" +
+                                                                               @" must be different");
                 return;
             }
 

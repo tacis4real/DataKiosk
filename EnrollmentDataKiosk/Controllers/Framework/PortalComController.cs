@@ -55,7 +55,7 @@ namespace EnrollmentDataKiosk.Controllers.Framework
                 }
 
                 Session["UserINFO"] = userCode;
-                Session["UserDATAINFO"] = userData.Username;
+                Session["UserDATAINFO"] = userData.Email;
                 if (firstLogin)
                 {
                     ViewBag.MyUserName = model.UserName.Trim();

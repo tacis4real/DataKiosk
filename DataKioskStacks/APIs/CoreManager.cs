@@ -21,10 +21,11 @@ namespace DataKioskStacks.APIs
                 {
                     throw new Exception("Role Name is empty or invalid");     
                 }
-                if (role == "*") { return true; }
+                //if (role == "*") { return true; }
                 if (_roles != null && _roles.Length > 0)
                 {
-                    return _roles.Contains(role);
+                    var check = _roles.Contains(role);
+                    return check;
                 }
 
                 return true;    //return new RoleRepository().IsUserInRole(Identity.Name, role.Trim());

@@ -94,9 +94,9 @@
     <Compile Include="Infrastructure\DataKioskContext.cs" />
     <Compile Include="Infrastructure\DataKioskRepository.cs" />
     <Compile Include="Infrastructure\DataKioskUoWork.cs" />
-    <Compile Include="Migrations\201804120900072_migrationX1.cs" />
-    <Compile Include="Migrations\201804120900072_migrationX1.Designer.cs">
-      <DependentUpon>201804120900072_migrationX1.cs</DependentUpon>
+    <Compile Include="Migrations\201804121227257_migrationX1.cs" />
+    <Compile Include="Migrations\201804121227257_migrationX1.Designer.cs">
+      <DependentUpon>201804121227257_migrationX1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,8 +140,8 @@
     <Content Include="SqlFiles\lga_lookups2.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804120900072_migrationX1.resx">
-      <DependentUpon>201804120900072_migrationX1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804121227257_migrationX1.resx">
+      <DependentUpon>201804121227257_migrationX1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ValResource\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

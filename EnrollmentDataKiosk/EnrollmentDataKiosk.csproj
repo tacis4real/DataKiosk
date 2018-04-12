@@ -199,6 +199,7 @@
     <Compile Include="Controllers\EnrollerController.cs" />
     <Compile Include="Controllers\Framework\PortalComController.cs" />
     <Compile Include="Controllers\Framework\PortalUserController.cs" />
+    <Compile Include="Controllers\Framework\SignOutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\StationController.cs" />
@@ -434,6 +435,7 @@
     <Folder Include="fonts\font-awesome\css\" />
     <Folder Include="KioskResources\" />
     <Folder Include="Views\Data\" />
+    <Folder Include="Views\SignOut\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

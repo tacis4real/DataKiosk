@@ -115,8 +115,7 @@ namespace DataKioskStacks.APIs
         }
         public static UserResponseObj ChangeFirstTimePassword(string username, string oldPassword, string newPassword)
         {
-            return null;
-            //return new UserRepository().ChangeFirstTimePassword(username, oldPassword, newPassword);
+            return new UserRepository().ChangeFirstTimePassword(username, oldPassword, newPassword);
         }
         public static bool ValidateUser(string username, string password, out string msg)
         {

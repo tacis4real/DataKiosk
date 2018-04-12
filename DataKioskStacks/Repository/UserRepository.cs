@@ -1653,6 +1653,8 @@ namespace DataKioskStacks.Repository
 
         }
 
+        
+
 
         private string RegisterLoginEvent(User user, int loginSource, long deviceId, string deviceSerial, bool success, out string msg)
         {

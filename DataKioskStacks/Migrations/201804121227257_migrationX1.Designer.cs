@@ -13,7 +13,7 @@ namespace DataKioskStacks.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201804120900072_migrationX1"; }
+            get { return "201804121227257_migrationX1"; }
         }
         
         string IMigrationMetadata.Source

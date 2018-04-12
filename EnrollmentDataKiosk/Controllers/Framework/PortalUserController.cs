@@ -5,16 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using DataKioskStacks.APIs;
 using DataKioskStacks.APIServer.APIObjs;
+using EnrollmentDataKiosk.Filters;
 using EnrollmentDataKiosk.Manager;
 using EnrollmentDataKiosk.Models.PortalModel;
 using WebCribs.TechCracker.WebCribs.TechCracker;
 
 namespace EnrollmentDataKiosk.Controllers.Framework
 {
+
+    [EppSecurity_Authorize(Roles = "Super Admin,Portal Admin")]
     public class PortalUserController : Controller
     {
         //
         // GET: /PortalUser/
+        //[EppSecurity_Authorize]
         public ActionResult Index()
         {
 
@@ -57,7 +61,7 @@ namespace EnrollmentDataKiosk.Controllers.Framework
 
         #region CRUD
 
-
+        //[EppSecurity_Authorize]
         public ActionResult AddUser()
         {
             ViewBag.Errors = Session["CreateErrors"] as List<string>;
@@ -130,7 +134,15 @@ namespace EnrollmentDataKiosk.Controllers.Framework
                     return Redirect(Url.RouteUrl(new { action = "AddUser" }));
                 }
 
+
+                if (User.IsInRole("Adigun"))
+                {
+                    var resp = "Yes";
+                }
+
+
                 var userData = MvcApplication.GetUserData(User.Identity.Name) ?? new UserData();
+
                 var helper = new UserRegistrationObj
                 {
                     ConfirmPassword = model.ConfirmPassword,
@@ -144,8 +156,8 @@ namespace EnrollmentDataKiosk.Controllers.Framework
                     Username = model.UserName,
                     Password = model.Password,
                     Sex = model.SexId,
-                    RegisteredByUserId = 1,
-                    //RegisteredByUserId = Convert.ToInt32(userData.UserId),
+                    //RegisteredByUserId = 1,
+                    RegisteredByUserId = Convert.ToInt32(userData.UserId),
                 };
                 
                 var retId = PortalUser.AddUser(helper);

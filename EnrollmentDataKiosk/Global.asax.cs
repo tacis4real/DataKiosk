@@ -108,11 +108,11 @@ namespace EnrollmentDataKiosk
             //        break;
             //}
 
-            //var roles = userDataSplit[2].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            var role = userDataSplit[2];
+            var roles = userDataSplit[2].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            //var role = userDataSplit[2];
 
             var id = new FormsIdentity(myAuthTicket);
-            IPrincipal principal = new StcPrincipal(id, role);
+            IPrincipal principal = new StcPrincipal(id, roles);
             Context.User = principal;
 
 
